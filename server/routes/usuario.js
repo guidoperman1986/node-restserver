@@ -4,9 +4,13 @@ const bcrypt = require('bcrypt')
 const _ = require('underscore')
 
 const Usuario = require('../models/usuario')
+const { verificaToken, verificaAdminRole } = require('../middelwares/autenticacion')
+
+app.get('/usuario', verificaToken, (req, res)=> {
 
 
-app.get('/usuario', function (req, res) {
+
+
     let desde = req.query.desde || 0;  //para el desde
     desde = Number(desde)
 
@@ -36,7 +40,7 @@ app.get('/usuario', function (req, res) {
             })
 })
   
-app.post('/usuario', function (req, res) {//crear registros
+app.post('/usuario',[verificaToken,verificaAdminRole], function (req, res) {//crear registros
     let body = req.body;
 
     let usuario = new Usuario({
@@ -64,7 +68,7 @@ app.post('/usuario', function (req, res) {//crear registros
     })
 })
   
-app.put('/usuario/:id', function (req, res) {//actualizar registros
+app.put('/usuario/:id',[verificaToken,verificaAdminRole] ,function (req, res) {//actualizar registros
   
     let id = req.params.id;
     let body = _.pick(req.body,['nombre','email','img','role','estado']);
@@ -89,7 +93,7 @@ app.put('/usuario/:id', function (req, res) {//actualizar registros
   
 })
   
-app.delete('/usuario/:id', function (req, res) {//actualizar registros
+app.delete('/usuario/:id', [verificaToken,verificaAdminRole],function (req, res) {//eliminar registros
     let id = req.params.id;
 
     //Usuario.findByIdAndRemove(id, (err,usuarioBorrado)=>{
