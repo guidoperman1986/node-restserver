@@ -6,11 +6,8 @@ const _ = require('underscore')
 const Usuario = require('../models/usuario')
 const { verificaToken, verificaAdminRole } = require('../middelwares/autenticacion')
 
+//app.get('/usuario', verificaToken, (req, res)=> {
 app.get('/usuario', verificaToken, (req, res)=> {
-
-
-
-
     let desde = req.query.desde || 0;  //para el desde
     desde = Number(desde)
 
@@ -40,7 +37,8 @@ app.get('/usuario', verificaToken, (req, res)=> {
             })
 })
   
-app.post('/usuario',[verificaToken,verificaAdminRole], function (req, res) {//crear registros
+//app.post('/usuario',[verificaToken,verificaAdminRole], function (req, res) {//crear registros
+app.post('/usuario', function (req, res) {//crear registros
     let body = req.body;
 
     let usuario = new Usuario({
