@@ -14,11 +14,9 @@ app.use(bodyParser.json())
 
 
 //config global de rutas
-app.use(require('./routes/index'))
- 
+let rutas = require('./routes/index')
 
-
-
+app.use(rutas);
 
 mongoose.connect(process.env.URLDB,
     {useNewUrlParser:true, useCreateIndex:true},
