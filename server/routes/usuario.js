@@ -7,17 +7,14 @@ const Usuario = require('../models/usuario')
 const { verificaToken, verificaAdminRole } = require('../middelwares/autenticacion')
 
 app.get('/usuario', verificaToken, (req, res)=> {
-
-
-
-
+    
     let desde = req.query.desde || 0;  //para el desde
     desde = Number(desde)
 
     let limite = req.query.limite || 5; //para el hasta
     limite = Number(limite)
 
-    let estado = 
+    //let estado = 
 
     Usuario.find({estado:true},'nombre email role estado')  
             .skip(desde)
